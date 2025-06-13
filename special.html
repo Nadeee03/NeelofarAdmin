@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special</title>
+</head>
+
+<body>
+    <main id="special-main-content">
+        <div class="special-container">
+            <form id="specialForm">
+                <div class="form-group">
+                    <label for="specialTitle">عنوان کتاب:</label>
+                    <input type="text" id="specialTitle" name="bookName" placeholder="عنوان کتاب">
+                </div>
+
+                <div class="form-group">
+                    <label for="specialId">آیدی:</label>
+                    <input type="text" id="specialId" name="bookName" placeholder="آیدی باید به شکل special1 باشد">
+                </div>
+
+                <div class="form-group">
+                    <label for="specialAuthor">نام نویسنده:</label>
+                    <input type="text" id="specialAuthor" name="authorName" placeholder="نام نویسنده">
+                </div>
+
+                <div class="form-group">
+                    <label for="specialPhoto">عکس کتاب:</label>
+                    <input type="file" id="specialPhoto" name="bookPhoto" accept="image/*">
+                </div>
+
+                <div class="form-group">
+                    <label for="specialDate">تاریخ:</label>
+                    <input type="date" id="specialDate" name="date" placeholder="تاریخ">
+                </div>
+
+                <div class="form-group">
+                    <label for="specialPDF">فایل پی‌دی‌اف:</label>
+                    <input type="file" id="specialPDF" name="bookPDF" accept="application/pdf">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="specialDescription">متن کتاب:</label>
+                    <textarea id="specialDescription" name="description" placeholder="توضیحات درباره کتاب"
+                        rows="4"></textarea>
+                </div>
+
+                <button type="submit" id="submitSpecial" class="submit">افزودن</button>
+                <button type="button" id="deleteSpecialBtn" class="deletbtn">حذف</button>
+            </form>
+
+            <!-- Delete Confirmation Modal -->
+            <div id="deleteSpecialModal" class="modal hidden">
+                <div class="modal-content">
+                    <p>آیا مطمئن هستید که می‌خواهید این کتاب را حذف کنید؟</p>
+                    <input type="text" id="deleteSpecialTitle" placeholder="نام کتاب را وارد کنید">
+                    <div class="modal-buttons">
+                        <button id="confirmSpecialDelete" class="confirmDelete">حذف</button>
+                        <button id="cancelSpecialDelete" class="cancelDelete">لغو</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="specialMessageBox" class="message-box" style="display: none;"></div>
+        </div>
+    </main>
+
+</body>
+
+</html>

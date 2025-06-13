@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحه معرفی نویسندگان و کتاب‌ها</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main id="main-content">
+        <div class="container">
+            <form id="recAuthorForm">
+
+                <div class="form-group">
+                    <label for="recCategory">دسته بندی:</label>
+                    <input type="text" id="recCategory" name="publisher" placeholder="دسته بندی">
+                </div>
+
+                <div class="form-group">
+                    <label for="recAuthorPhoto">عکس نویسنده:</label>
+                    <input type="file" id="recAuthorPhoto" name="authorPhoto" accept="image/*">
+                </div>
+
+                <div class="form-group">
+                    <label for="recAuthorName">نام نویسنده:</label>
+                    <input type="text" id="recAuthorName" name="authorName" placeholder="نام نویسنده">
+                </div>
+
+                <div class="form-group">
+                    <label for="recBookPhoto">عکس کتاب:</label>
+                    <input type="file" id="recBookPhoto" name="bookPhoto" accept="image/*">
+                </div>
+
+                <div class="form-group">
+                    <label for="recBookName">عنوان کتاب:</label>
+                    <input type="text" id="recBookName" name="bookName" placeholder="عنوان کتاب">
+                </div>
+
+                <div class="form-group">
+                    <label for="recGenre">ژانر:</label>
+                    <input type="text" id="recGenre" name="genre" placeholder="ژانر کتاب">
+                </div>
+
+                <div class="form-group">
+                    <label for="recTranslator">مترجم:</label>
+                    <input type="text" id="recTranslator" name="translator" placeholder="نام مترجم">
+                </div>
+
+                <div class="form-group">
+                    <label for="recPublisher">انتشارات:</label>
+                    <input type="text" id="recPublisher" name="publisher" placeholder="نام انتشارات">
+                </div>
+
+                <div class="form-group">
+                    <label for="recDescription">توضیحات:</label>
+                    <textarea id="recDescription" name="description" placeholder="توضیحات درباره کتاب"
+                        rows="4"></textarea>
+                </div>
+
+                <button type="submit" id="recSubmit" class="submit">افزودن</button>
+
+                <button type="button" id="recDeleteBtn" class="deletbtn">حذف</button>
+            </form>
+
+            <!-- Delete Confirmation Modal -->
+            <div id="recDeleteModal" class="modal hidden">
+                <div class="modal-content">
+                    <p>آیا مطمئن هستید که می‌خواهید این کتاب را حذف کنید؟</p>
+                    <input type="text" id="recDeleteBookName" placeholder="نام کتاب را وارد کنید">
+                    <div class="modal-buttons">
+                        <button id="recConfirmDelete" class="confirmDelete">حذف</button>
+                        <button id="recCancelDelete" class="cancelDelete">لغو</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="recMessageBox" class="message-box" style="display: none;"></div>
+        </div>
+    </main>
+
+
+</body>
+
+</html>

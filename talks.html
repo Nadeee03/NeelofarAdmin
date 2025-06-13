@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>صفحه گفتگوها</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="talks-main-content">
+    <div class="talks-container">
+      <form id="talksForm">
+
+        <div class="form-group">
+          <label for="talksTitle">عنوان کتاب:</label>
+          <input type="text" id="talksTitle" name="bookName" placeholder="عنوان کتاب">
+        </div>
+
+        <div class="form-group">
+          <label for="talksId">آیدی:</label>
+          <input type="text" id="talksId" name="bookName" placeholder="آیدی باید به شکل talks1 باشد">
+        </div>
+
+        <div class="form-group">
+          <label for="talksAuthor">نام نویسنده:</label>
+          <input type="text" id="talksAuthor" name="authorName" placeholder="نام نویسنده">
+        </div>
+
+        <div class="form-group">
+          <label for="talksPhoto">عکس کتاب:</label>
+          <input type="file" id="talksPhoto" name="bookPhoto" accept="image/*">
+        </div>
+
+        <div class="form-group">
+          <label for="talksDate">تاریخ:</label>
+          <input type="date" id="talksDate" name="date" placeholder="تاریخ">
+        </div>
+
+        <div class="form-group">
+          <label for="talksDescription">متن کتاب:</label>
+          <textarea id="talksDescription" name="description" placeholder="توضیحات درباره کتاب" rows="4"></textarea>
+        </div>
+
+        <button type="submit" id="submitTalks" class="submit">افزودن</button>
+        <button type="button" id="deleteTalksBtn" class="deletbtn">حذف</button>
+      </form>
+
+      
+      <div id="deleteTalksModal" class="modal hidden">
+        <div class="modal-content">
+          <p>آیا مطمئن هستید که می‌خواهید این کتاب را حذف کنید؟</p>
+          <input type="text" id="deleteTalksTitle" placeholder="نام کتاب را وارد کنید">
+          <div class="modal-buttons">
+            <button id="confirmTalksDelete" class="confirmDelete">حذف</button>
+            <button id="cancelTalksDelete" class="cancelDelete">لغو</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="talksMessageBox" class="message-box" style="display: none;"></div>
+    </div>
+  </main>
+
+</body>
+</html>
+

@@ -1,0 +1,257 @@
+style.css
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'IRNazanin', sans-serif;
+  direction: rtl;
+}
+
+@font-face {
+  font-family: 'IRNazanin';
+  src: url('../asssets/IRNazanin.ttf') format('truetype');
+}
+
+.navbar {
+  margin: 0 auto;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: white;
+  border-bottom: 1px solid #eee;
+}
+
+.nav-content {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-section {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.logo img {
+  height: 90px;
+  object-fit: contain;
+  display: block;
+  margin-left: 10px;
+}
+
+.navlinks {
+  flex: 1;
+  justify-content: space-around;
+  gap: 30px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.navlinks a {
+  text-decoration: none;
+  color: #555;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.navlinks a:hover {
+  color: #0088cc;
+  border-bottom: 1px solid #00aaff;
+}
+
+main h1,
+p {
+  text-align: center;
+  color: #343a40;
+}
+
+/* Recommendations */
+
+
+.container, .talks-container, .special-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+#authorForm, #talksForm, #specialForm, #podcastForm, #specialRequestForm, #recAuthorForm {
+  width: 800px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input,
+textarea {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+}
+
+.submit{
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit:hover {
+  background-color: #45a049;
+}
+
+.deletbtn{
+  background-color: red;
+  color: white;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Style for file input fields */
+input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-family: inherit;
+  font-size: 1em;
+}
+
+/* Optional: Style the file input button */
+input[type="file"]::file-selector-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1em;
+  margin-right: 10px;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: #45a049;
+}
+
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 9999;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 300px;
+}
+
+.modal-content input {
+  margin-top: 10px;
+  padding: 5px;
+  width: 90%;
+}
+
+.modal-buttons {
+  margin-top: 15px;
+}
+
+.modal-buttons button {
+  margin: 5px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirmDelete {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.cancelDelete {
+  background-color: #bdc3c7;
+}
+
+#messageBox {
+  display: none;
+  padding: 10px;
+  margin-top: 20px;
+  font-weight: bold;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+}
+
+#messageBox.success {
+  background-color: green;
+}
+
+#messageBox.error {
+  background-color: red;
+}
+
+.message-box {
+  background-color: #4caf50; /* green for success */
+  color: white;
+  padding: 12px 20px;
+  margin: 20px auto;
+  width: fit-content;
+  max-width: 80%;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  transition: opacity 0.5s ease;
+}
+
+/* Request */
+#specialIsOpen {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  transition: border-color 0.3s ease;
+}
+
+#specialIsOpen:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+
+
+
+
