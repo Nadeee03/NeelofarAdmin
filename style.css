@@ -12,6 +12,19 @@ body {
   src: url('../asssets/IRNazanin.ttf') format('truetype');
 }
 
+[lang='en']{
+  text-align: left;
+}
+
+html[lang='en'] input,
+html[lang='en'] textarea,
+html[lang='en'] input::placeholder,
+html[lang='en'] textarea::placeholder {
+  direction: ltr;
+  text-align: left;
+}
+
+
 .navbar {
   margin: 0 auto;
   width: 100%;
@@ -252,6 +265,127 @@ input[type="file"]::file-selector-button:hover {
   outline: none;
 }
 
+/* Hide burger menu on desktop */
+.menu-toggle {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #527e69;
+  margin-left: 110px;
+}
 
+/* Mobile layout */
+
+@media (max-width: 768px) {
+  .nav-content {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0; 
+    margin: 0;  
+    width: 100%;
+  }
+
+  .menu-toggle {
+    order: 1; /* left side */
+    display: flex;
+    font-size: 28px;
+    cursor: pointer;
+    color: #527E69;
+    margin: 0; 
+    padding: 15px;
+  }
+
+  .logo {
+    order: 2; 
+    display: flex;
+    align-items: center;
+    margin: 0; 
+    padding: 0;
+  }
+
+  .logo img {
+    height: 70px;
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px; /* below navbar */
+    right: 0;
+    width: 100%;
+    background-color: white;
+    flex-direction: column;
+    align-items: flex-start;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    border-top: 1px solid #eee;
+    z-index: 900;
+    padding: 0; 
+    margin: 0;  
+  }
+
+  .nav-links.show {
+    max-height: 80vh; /* adjust for content */
+  }
+
+  .nav-links a {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    box-sizing: border-box;
+  }
+}
+
+
+/* ===== Responsive Styles ===== */
+@media (max-width: 992px) {
+  #authorForm, #talksForm, #specialForm, #podcastForm, #specialRequestForm, #recAuthorForm {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .container, .talks-container, .special-container {
+    padding: 1.5rem;
+  }
+
+  #authorForm, #talksForm, #specialForm, #podcastForm, #specialRequestForm, #recAuthorForm {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .submit, .deletbtn {
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 15px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container, .talks-container, .special-container {
+    padding: 1rem;
+  }
+
+  #authorForm, #talksForm, #specialForm, #podcastForm, #specialRequestForm, #recAuthorForm {
+    padding: 10px;
+  }
+
+  input[type="file"]::file-selector-button {
+    padding: 4px 8px;
+    font-size: 0.9em;
+  }
+
+  .submit, .deletbtn {
+    font-size: 0.9em;
+  }
+}
 
 

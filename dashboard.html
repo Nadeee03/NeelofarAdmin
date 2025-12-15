@@ -1,18 +1,26 @@
 <!DOCTYPE html>
-<html lang="en"  dir="rtl">
+<html lang="fa"  dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="fontawesome-free-6.7.2-web/css/all.css">
 </head>
 <body>
       <header>
         <nav class="navbar">
             <div class="nav-content">
+
+                <!-- Burger Menu Icon -->
+                <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+                </div>
+
                 <div class="navbar-section logo">
                     <img src="./Neelofar_logo_resized-removebg-preview.png" alt="لوگو" />
                 </div>
+
 
                 <div class="navbar-section nav-links navlinks">
                     <a href="#dashboard">خانه</a>
@@ -22,15 +30,9 @@
                     <a href="#podcast">پادکست</a>
                     <a href="#request">درخواست نامه</a>
                     <a href="#recommendations">توصیه های ما</a>
-                    <a href="#about">درباره ما</a>
                 </div>
 
-                <div class="navbar-section icons">
-                    <a href="#"><i class="fab fa-telegram-plane"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fas fa-search"></i></a>
-                </div>
+                
             </div>
         </nav>
     </header>
@@ -40,5 +42,6 @@
     </main>
 
     <script type="module" src="dashboard.js"></script>
+    
 </body>
 </html>

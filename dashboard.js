@@ -1,53 +1,9 @@
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const supabase = createClient(
   'https://cghcstaoyaguvuxkedys.supabase.co', // Replace with your URL
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNnaGNzdGFveWFndXZ1eGtlZHlzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcyNzk5NzgsImV4cCI6MjA2Mjg1NTk3OH0.AjEWl55yzfSpj5nOAWHRHgJvE2RCVhkXeKxCr25w84s'                    // Replace with your anon public key
+  'sb_publishable_ndl3AMemUASbTUt1WCAD3w_gC9iBiOj'                    // Replace with your anon public key
 );
-
-
-// document.addEventListener('DOMContentLoaded', () => {
-//   const mainContent = document.getElementById('main-content');
-
-//   // Function to load content dynamically
-//   async function loadContent(url) {
-//     try {
-//       const response = await fetch(url);
-//       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-//       const text = await response.text();
-//       const parser = new DOMParser();
-//       const doc = parser.parseFromString(text, 'text/html');
-//       const newContent = doc.getElementById('main-content');
-//       if (newContent) {
-//         mainContent.innerHTML = newContent.innerHTML;
-//         document.title = doc.title; // Update the document title
-//       } else {
-//         console.error('Main content not found in the fetched page.');
-//       }
-//     } catch (error) {
-//       console.error('Error loading content:', error);
-//     }
-//   }
-
-//   // Intercept link clicks
-//   document.querySelectorAll('a').forEach(link => {
-//     const href = link.getAttribute('href');
-//     if (href && !href.startsWith('http') && !href.startsWith('#')) {
-//       link.addEventListener('click', event => {
-//         event.preventDefault();
-//         const url = link.getAttribute('href');
-//         history.pushState(null, '', url);
-//         loadContent(url);
-//       });
-//     }
-//   });
-
-//   // Handle browser navigation (back/forward)
-//   window.addEventListener('popstate', () => {
-//     loadContent(location.pathname);
-//   });
-// });
-
 
 const routerInfo = {
   dashboard: {
@@ -142,6 +98,43 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 
+const monthsDari = ["حمل", "ثور", "جوزا", "سرطان", "اسد", "سنبله", "میزان", "عقرب", "قوس", "جدی", "دلو", "حوت"];
+const weekdaysDari = [
+  "یکشنبه",
+  "دوشنبه",
+  "سه‌شنبه",
+  "چهارشنبه",
+  "پنجشنبه",
+  "جمعه",
+  "شنبه"
+];
+
+function toJalali(gy, gm, gd) {
+  let g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+  let jy = gy > 1600 ? 979 : 0;
+  gy -= gy > 1600 ? 1600 : 621;
+
+  let gy2 = gm > 2 ? gy + 1 : gy;
+  let days = 365 * gy + Math.floor((gy2 + 3) / 4)
+    - Math.floor((gy2 + 99) / 100)
+    + Math.floor((gy2 + 399) / 400)
+    - 80 + gd + g_d_m[gm - 1];
+
+  jy += 33 * Math.floor(days / 12053);
+  days %= 12053;
+  jy += 4 * Math.floor(days / 1461);
+  days %= 1461;
+
+  if (days > 365) {
+    jy += Math.floor((days - 1) / 365);
+    days = (days - 1) % 365;
+  }
+
+  let jm = days < 186 ? 1 + Math.floor(days / 31) : 7 + Math.floor((days - 186) / 30);
+  let jd = days < 186 ? 1 + (days % 31) : 1 + ((days - 186) % 30);
+
+  return { jy, jm, jd };
+}
 
 function initializePageScripts(href) {
   if (href === 'notes') {
@@ -153,9 +146,24 @@ function initializePageScripts(href) {
         const content = document.getElementById('description').value;
         const writer = document.getElementById('authorName').value;
         const title = document.getElementById('bookName').value;
-        const date = document.getElementById('date').value;
         const id = document.getElementById('id').value;
         const image = document.getElementById('bookPhoto').files[0];
+        const rawDate = document.getElementById('date').value;
+        const d = new Date(rawDate);
+
+        // weekday in Dari
+        const weekday = weekdaysDari[d.getDay()];
+
+        // Jalali conversion
+        const j = toJalali(
+          d.getFullYear(),
+          d.getMonth() + 1,
+          d.getDate()
+        );
+
+        // Final format: weekday day month year
+        const date = `${weekday},  ${j.jd} ${monthsDari[j.jm - 1]} ${j.jy}`;
+
 
         let bookUrl = '';
 
@@ -255,9 +263,23 @@ function initializePageScripts(href) {
         const content = document.getElementById('talksDescription').value;
         const writer = document.getElementById('talksAuthor').value;
         const title = document.getElementById('talksTitle').value;
-        const date = document.getElementById('talksDate').value;
         const id = document.getElementById('talksId').value;
         const image = document.getElementById('talksPhoto').files[0];
+        const rawDate = document.getElementById('talksDate').value;
+        const d = new Date(rawDate);
+
+        // weekday in Dari
+        const weekday = weekdaysDari[d.getDay()];
+
+        // Jalali conversion
+        const j = toJalali(
+          d.getFullYear(),
+          d.getMonth() + 1,
+          d.getDate()
+        );
+
+        // Final format: weekday day month year
+        const date = `${weekday},  ${j.jd} ${monthsDari[j.jm - 1]} ${j.jy}`;
 
         let bookUrl = '';
 
@@ -350,6 +372,7 @@ function initializePageScripts(href) {
     }
   }
 
+
   if (href === 'special') {
     const form = document.getElementById('specialForm');
     if (form) {
@@ -359,10 +382,25 @@ function initializePageScripts(href) {
         const content = document.getElementById('specialDescription').value;
         const writer = document.getElementById('specialAuthor').value;
         const title = document.getElementById('specialTitle').value;
-        const date = document.getElementById('specialDate').value;
         const id = document.getElementById('specialId').value;
         const image = document.getElementById('specialPhoto').files[0];
         const pdfFile = document.getElementById('specialPDF').files[0];
+        const rawDate = document.getElementById('specialDate').value;
+        const d = new Date(rawDate);
+
+        // weekday in Dari
+        const weekday = weekdaysDari[d.getDay()];
+
+        // Jalali conversion
+        const j = toJalali(
+          d.getFullYear(),
+          d.getMonth() + 1,
+          d.getDate()
+        );
+
+        // Final format: weekday day month year
+        const date = `${weekday},  ${j.jd} ${monthsDari[j.jm - 1]} ${j.jy}`;
+
 
         let bookUrl = '', pdfUrl = '';
 
@@ -475,10 +513,24 @@ function initializePageScripts(href) {
         const content = document.getElementById('podcastDescription').value;
         const writer = document.getElementById('podcastAuthor').value;
         const title = document.getElementById('podcastTitle').value;
-        const date = document.getElementById('podcastDate').value;
         const id = document.getElementById('podcastId').value;
         const image = document.getElementById('podcastImage').files[0];
         const audioFile = document.getElementById('podcastAudio').files[0];
+        const rawDate = document.getElementById('podcastDate').value;
+        const d = new Date(rawDate);
+
+        // weekday in Dari
+        const weekday = weekdaysDari[d.getDay()];
+
+        // Jalali conversion
+        const j = toJalali(
+          d.getFullYear(),
+          d.getMonth() + 1,
+          d.getDate()
+        );
+
+        // Final format: weekday day month year
+        const date = `${weekday},  ${j.jd} ${monthsDari[j.jm - 1]} ${j.jy}`;
 
         let imageUrl = '', audioUrl = '';
 
@@ -593,10 +645,23 @@ function initializePageScripts(href) {
         const isOpenInput = document.getElementById('specialIsOpen').value === 'true';
         const description = document.getElementById('specialDescription').value;
 
-        const dateText = `از ${new Intl.DateTimeFormat('fa-IR').format(new Date(startDate))} تا ${new Intl.DateTimeFormat('fa-IR').format(new Date(endDate))}`;
+        function formatDariDate(inputDate) {
+          const d = new Date(inputDate);
+          const weekday = weekdaysDari[d.getDay()];
+          const j = toJalali(d.getFullYear(), d.getMonth() + 1, d.getDate());
+
+          return `${weekday} ${j.jd} ${monthsDari[j.jm - 1]} ${j.jy}`;
+        }
+
+        const startDateText = formatDariDate(startDate);
+        const endDateText = formatDariDate(endDate);
+        const dateText = `از ${startDateText} تا ${endDateText}`;
 
         const now = new Date();
-        const isStillOpen = new Date(endDate) >= now ? isOpenInput : false;
+        const end = new Date(endDate);
+
+        const isStillOpen = end >= now && isOpenInput;
+
 
         try {
           const { data: existing, error: checkError } = await supabase
@@ -620,19 +685,19 @@ function initializePageScripts(href) {
               provinces: province,
               open: isStillOpen,
               date: dateText,
-              description:description
+              description: description
             }
           ]);
 
           if (insertError) {
-            console.error('❌ Error inserting province:', insertError.message);
+            console.error(' Error inserting province:', insertError.message);
             alert('خطا در ثبت اطلاعات');
           } else {
-            alert('✅ ولایت با موفقیت ثبت شد!');
+            alert(' ولایت با موفقیت ثبت شد!');
             document.getElementById('specialRequestForm').reset();
           }
         } catch (err) {
-          console.error('❌ Unexpected error:', err);
+          console.error(' Unexpected error:', err);
           alert('خطا در ثبت اطلاعات');
         }
       });
@@ -758,6 +823,30 @@ function initializePageScripts(href) {
     }
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.querySelector(".menu-toggle");
+  const navLinks = document.querySelector(".navlinks");
+  const navItems = document.querySelectorAll(".navlinks a");
+
+  if (menuToggle && navLinks) {
+    // Toggle menu when burger is clicked
+    menuToggle.addEventListener("click", () => {
+      navLinks.classList.toggle("show");
+    });
+
+    // Close menu when any nav link is clicked
+    navItems.forEach(link => {
+      link.addEventListener("click", () => {
+        if (navLinks.classList.contains("show")) {
+          navLinks.classList.remove("show");
+        }
+      });
+    });
+  }
+});
+
+
 
 
 
