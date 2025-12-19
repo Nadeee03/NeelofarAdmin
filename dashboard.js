@@ -38,6 +38,10 @@ const routerInfo = {
     page: "./about.html",
     title: "درباره ما | Neelofar Online Library ",
   },
+  applications: {
+    page: "./applications.html",
+    title: " درخواست‌ها |Neelofar Online Library "
+  }
 };
 
 const navLinks = document.querySelectorAll(".nav-link, .navlinks a");
@@ -822,6 +826,59 @@ function initializePageScripts(href) {
 
     }
   }
+
+  // Aplications
+  if (href === 'applications') {
+    const tableBody = document.querySelector("#applicationsTable tbody");
+    if (!tableBody) return; // safe now, inside function
+
+    async function loadApplications() {
+      const { data, error } = await supabase
+        .from("applications")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      tableBody.innerHTML = "";
+
+      data.forEach(app => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+        <td>${app.name}</td>
+        <td>${app.email}</td>
+        <td>${app.province}</td>
+        <td>${app.age}</td>
+        <td>${app.education}</td>
+        <td>${app.motivation}</td>
+         <td>${app.experience}</td>
+        <td>${app.status}</td>
+        <td>
+          <select onchange="updateStatus('${app.id}', this.value)">
+            <option value="submitted">ثبت شده</option>
+            <option value="under_review">در حال بررسی</option>
+            <option value="accepted">قبول</option>
+            <option value="rejected">رد</option>
+          </select>
+        </td>
+      `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    window.updateStatus = async (id, status) => {
+      await supabase
+        .from("applications")
+        .update({ status })
+        .eq("id", id);
+    };
+
+    loadApplications();
+  }
+
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -845,6 +902,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+
+
 
 
 
