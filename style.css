@@ -327,7 +327,7 @@ input[type="file"]::file-selector-button:hover {
   }
 
   .nav-links.show {
-    max-height: 80vh; /* adjust for content */
+    max-height: 100vh; /* adjust for content */
   }
 
   .nav-links a {
