@@ -333,7 +333,7 @@ input[type="file"]::file-selector-button:hover {
   .nav-links a {
     display: block;
     width: 100%;
-    padding: 12px 20px;
+    padding: 0px 20px;
     border-bottom: 1px solid #f0f0f0;
     box-sizing: border-box;
   }
