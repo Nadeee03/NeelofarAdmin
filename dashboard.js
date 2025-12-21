@@ -68,6 +68,7 @@ async function changePageContent(href) {
 
     contentContainer.innerHTML = newContent.innerHTML;
     initializePageScripts(href);
+    
 
     document.title = title;
 
@@ -140,14 +141,48 @@ function toJalali(gy, gm, gd) {
   return { jy, jm, jd };
 }
 
+// --- TinyMCE initialization ---
+// --- TinyMCE initialization (SPA-safe) ---
+function initializeEditors() {
+  // If TinyMCE is not loaded, do nothing
+  if (!window.tinymce) return;
+
+  // 🔴 IMPORTANT: remove old editors before re-init
+  tinymce.remove();
+
+  tinymce.init({
+    selector: `
+      #description,
+      #talksDescription,
+      #specialDescription,
+      #podcastDescription,
+      #recDescription,
+      #reqDescription
+    `,
+    height: 300,
+    menubar: false,
+    plugins: 'lists link image table code',
+    toolbar:
+      'undo redo | formatselect | bold italic underline | ' +
+      'alignleft aligncenter alignright | ' +
+      'bullist numlist | link image | code',
+    directionality: 'rtl',
+    language: 'fa',   // optional (Persian/Dari UI)
+  });
+}
+
+
 function initializePageScripts(href) {
+  initializeEditors(); // <-- initialize all editors
+
   if (href === 'notes') {
     const form = document.getElementById('authorForm');
     if (form) {
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const content = document.getElementById('description').value;
+        // const content = document.getElementById('description').value;
+         const content = tinymce.get('description')?.getContent() || '';
         const writer = document.getElementById('authorName').value;
         const title = document.getElementById('bookName').value;
         const id = document.getElementById('id').value;
@@ -264,7 +299,8 @@ function initializePageScripts(href) {
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const content = document.getElementById('talksDescription').value;
+        // const content = document.getElementById('talksDescription').value;
+        const content = tinymce.get('talksDescription')?.getContent() || '';
         const writer = document.getElementById('talksAuthor').value;
         const title = document.getElementById('talksTitle').value;
         const id = document.getElementById('talksId').value;
@@ -383,7 +419,8 @@ function initializePageScripts(href) {
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const content = document.getElementById('specialDescription').value;
+        // const content = document.getElementById('specialDescription').value;
+        const content = tinymce.get('specialDescription')?.getContent() || '';
         const writer = document.getElementById('specialAuthor').value;
         const title = document.getElementById('specialTitle').value;
         const id = document.getElementById('specialId').value;
@@ -514,7 +551,8 @@ function initializePageScripts(href) {
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const content = document.getElementById('podcastDescription').value;
+        // const content = document.getElementById('podcastDescription').value;
+        const content = tinymce.get('podcastDescription')?.getContent() || '';
         const writer = document.getElementById('podcastAuthor').value;
         const title = document.getElementById('podcastTitle').value;
         const id = document.getElementById('podcastId').value;
@@ -647,7 +685,8 @@ function initializePageScripts(href) {
         const startDate = document.getElementById('specialStartDate').value;
         const endDate = document.getElementById('specialEndDate').value;
         const isOpenInput = document.getElementById('specialIsOpen').value === 'true';
-        const description = document.getElementById('specialDescription').value;
+        // const description = document.getElementById('specialDescription').value;
+        const content = tinymce.get('reqDescription')?.getContent() || '';
 
         function formatDariDate(inputDate) {
           const d = new Date(inputDate);
@@ -717,7 +756,8 @@ function initializePageScripts(href) {
         e.preventDefault();
 
         const category = document.getElementById('recCategory').value;
-        const description = document.getElementById('recDescription').value;
+        // const description = document.getElementById('recDescription').value;
+         const description = tinymce.get('recDescription')?.getContent() || '';
         const authorName = document.getElementById('recAuthorName').value;
         const bookName = document.getElementById('recBookName').value;
         const genre = document.getElementById('recGenre').value;

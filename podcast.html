@@ -44,9 +44,15 @@
                     <input type="file" id="podcastAudio" name="podcastAudio" accept="audio/*">
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="podcastDescription">متن پادکست :</label>
                     <textarea id="podcastDescription" name="podcastDescription" rows="4"></textarea>
+                </div> -->
+
+                <div class="form-group">
+                    <label for="description">متن کتاب:</label>
+                    <div id="editor"></div>
+                    <input type="hidden" id="podcastDescription" name="description">
                 </div>
 
                 <button type="submit" id="podcastSubmit" class="submit">افزودن</button>
