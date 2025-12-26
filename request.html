@@ -9,56 +9,15 @@
 </head>
 
 <body>
-    <!-- <main id="main-content">
-        <div class="container">
-            <form id="authorForm">
-
-                <div class="form-group">
-                    <label for="province-name">نام ولایت</label>
-                    <input type="text" id="province-name" name="provinces" placeholder="ولایت" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="registration-start">تاریخ شروع ثبت‌نام</label>
-                    <input type="date" id="registration-start" name="date" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="registration-end">تاریخ پایان ثبت‌نام</label>
-                    <input type="date" id="registration-end" name="date" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="is-open">ثبت‌نام باز است؟</label>
-                    <select id="is-open" name="open" required>
-                        <option value="true">بله</option>
-                        <option value="false">خیر</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <button type="submit" id="submit" class="submit-btn">ثبت ولایت</button>
-                </div>
-
-            </form>
-
-        </div>
-    </main> -->
-
     <main id="main-content">
         <div class="container">
-            <form id="specialRequestForm">
+
+            <form id="provinceForm">
 
                 <div class="form-group">
-                    <label for="specialProvince">نام ولایت</label>
-                    <input type="text" id="specialProvince" name="provinces" placeholder="ولایت" required>
+                    <label for="provinceName">نام ولایت</label>
+                    <input type="text" id="provinceName" name="province" placeholder="ولایت" required>
                 </div>
-
-                <!-- <div class="form-group">
-                    <label for="specialDescription">توضیحات</label>
-                    <textarea id="specialDescription" name="description" placeholder="توضیحات" required
-                        rows="4"></textarea>
-                </div> -->
 
                 <div class="form-group">
                     <label for="description">توضیحات :</label>
@@ -67,26 +26,33 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="specialStartDate">تاریخ شروع ثبت‌نام</label>
-                    <input type="date" id="specialStartDate" name="start_date" required>
+                    <label for="startDate">تاریخ شروع ثبت‌نام</label>
+                    <input type="date" id="startDate" name="start_date" >
                 </div>
 
                 <div class="form-group">
-                    <label for="specialEndDate">تاریخ پایان ثبت‌نام</label>
-                    <input type="date" id="specialEndDate" name="end_date" required>
+                    <label for="endDate">تاریخ پایان ثبت‌نام</label>
+                    <input type="date" id="endDate" name="end_date" >
                 </div>
 
                 <div class="form-group">
-                    <label for="specialIsOpen">ثبت‌نام باز است؟</label>
-                    <select id="specialIsOpen" name="open" required>
+                    <label for="isOpen">ثبت‌نام باز است؟</label>
+                    <select id="isOpen" name="open" required>
                         <option value="true">بله</option>
                         <option value="false">خیر</option>
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <button type="submit" id="specialSubmit" class="submit-btn submit">ثبت ولایت</button>
-                </div>
+                <hr>
+
+                <h3>مدیریت فیلدهای فرم درخواست</h3>
+                <div id="fieldsContainer"></div>
+
+                <button type="button" id="addFieldBtn">افزودن فیلد جدید</button>
+
+                <hr>
+
+                <button type="submit" class="submit-btn">ثبت ولایت و فیلدها</button>
 
             </form>
         </div>

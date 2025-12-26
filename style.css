@@ -1,6 +1,4 @@
-style.css
-
-body {
+style.css body {
   margin: 0;
   padding: 0;
   font-family: 'IRNazanin', sans-serif;
@@ -12,7 +10,7 @@ body {
   src: url('../asssets/IRNazanin.ttf') format('truetype');
 }
 
-[lang='en']{
+[lang='en'] {
   text-align: left;
 }
 
@@ -83,14 +81,21 @@ p {
 /* Recommendations */
 
 
-.container, .talks-container, .special-container {
+.container,
+.talks-container,
+.special-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 2rem;
 }
 
-#authorForm, #talksForm, #specialForm, #podcastForm, #specialRequestForm, #recAuthorForm {
+#authorForm,
+#talksForm,
+#specialForm,
+#podcastForm,
+#specialRequestForm,
+#recAuthorForm {
   width: 800px;
   background-color: #fff;
   padding: 20px;
@@ -117,7 +122,7 @@ textarea {
   border: 1px solid #ccc;
 }
 
-.submit{
+.submit {
   background-color: #4CAF50;
   color: white;
   padding: 10px 20px;
@@ -130,7 +135,7 @@ textarea {
   background-color: #45a049;
 }
 
-.deletbtn{
+.deletbtn {
   background-color: red;
   color: white;
   color: white;
@@ -171,10 +176,14 @@ input[type="file"]::file-selector-button:hover {
 
 .modal {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.6);
-  display: flex; justify-content: center; align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 9999;
 }
 
@@ -236,7 +245,8 @@ input[type="file"]::file-selector-button:hover {
 }
 
 .message-box {
-  background-color: #4caf50; /* green for success */
+  background-color: #4caf50;
+  /* green for success */
   color: white;
   padding: 12px 20px;
   margin: 20px auto;
@@ -249,20 +259,134 @@ input[type="file"]::file-selector-button:hover {
 }
 
 /* Request */
-#specialIsOpen {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #fff;
-  color: #333;
-  transition: border-color 0.3s ease;
+
+/* Container styling */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
 }
 
-#specialIsOpen:focus {
-  border-color: #4caf50;
-  outline: none;
+/* Form styling */
+#provinceForm {
+  width: 800px;
+  max-width: 95%;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Form group */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Buttons */
+button,
+.submit-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+button:hover,
+.submit-btn:hover {
+  background-color: #45a049;
+}
+
+/* Add Field Button */
+#addFieldBtn {
+  background-color: #527E69;
+}
+
+#addFieldBtn:hover {
+  background-color: #305E53;
+}
+
+/* Horizontal line spacing */
+hr {
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+/* Section titles */
+h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+#isOpen{
+  width: 100%;
+}
+
+/* File input styling */
+input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-family: inherit;
+  font-size: 1em;
+}
+
+input[type="file"]::file-selector-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1em;
+  margin-right: 10px;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: #45a049;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  #provinceForm {
+    width: 95%;
+    padding: 15px;
+  }
+
+  button,
+  .submit-btn,
+  #addFieldBtn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  #provinceForm {
+    padding: 10px;
+  }
+
+  #editor {
+    min-height: 120px;
+  }
 }
 
 /* Hide burger menu on desktop */
@@ -281,26 +405,27 @@ input[type="file"]::file-selector-button:hover {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0; 
-    margin: 0;  
+    padding: 0;
+    margin: 0;
     width: 100%;
   }
 
   .menu-toggle {
-    order: 1; /* left side */
+    order: 1;
+    /* left side */
     display: flex;
     font-size: 28px;
     cursor: pointer;
     color: #527E69;
-    margin: 0; 
+    margin: 0;
     padding: 15px;
   }
 
   .logo {
-    order: 2; 
+    order: 2;
     display: flex;
     align-items: center;
-    margin: 0; 
+    margin: 0;
     padding: 0;
   }
 
@@ -311,7 +436,8 @@ input[type="file"]::file-selector-button:hover {
 
   .nav-links {
     position: absolute;
-    top: 70px; /* below navbar */
+    top: 70px;
+    /* below navbar */
     right: 0;
     width: 100%;
     background-color: white;
@@ -322,12 +448,13 @@ input[type="file"]::file-selector-button:hover {
     transition: max-height 0.4s ease-out;
     border-top: 1px solid #eee;
     z-index: 900;
-    padding: 0; 
-    margin: 0;  
+    padding: 0;
+    margin: 0;
   }
 
   .nav-links.show {
-    max-height: 100vh; /* adjust for content */
+    max-height: 100vh;
+    /* adjust for content */
   }
 
   .nav-links a {
@@ -342,22 +469,37 @@ input[type="file"]::file-selector-button:hover {
 
 /* ===== Responsive Styles ===== */
 @media (max-width: 992px) {
-  #authorForm, #talksForm, #specialForm, #podcastForm, #specialRequestForm, #recAuthorForm {
+
+  #authorForm,
+  #talksForm,
+  #specialForm,
+  #podcastForm,
+  #specialRequestForm,
+  #recAuthorForm {
     width: 90%;
   }
 }
 
 @media (max-width: 768px) {
-  .container, .talks-container, .special-container {
+
+  .container,
+  .talks-container,
+  .special-container {
     padding: 1.5rem;
   }
 
-  #authorForm, #talksForm, #specialForm, #podcastForm, #specialRequestForm, #recAuthorForm {
+  #authorForm,
+  #talksForm,
+  #specialForm,
+  #podcastForm,
+  #specialRequestForm,
+  #recAuthorForm {
     width: 100%;
     padding: 15px;
   }
 
-  .submit, .deletbtn {
+  .submit,
+  .deletbtn {
     width: 100%;
     text-align: center;
     padding: 12px 0;
@@ -370,11 +512,19 @@ input[type="file"]::file-selector-button:hover {
 }
 
 @media (max-width: 480px) {
-  .container, .talks-container, .special-container {
+
+  .container,
+  .talks-container,
+  .special-container {
     padding: 1rem;
   }
 
-  #authorForm, #talksForm, #specialForm, #podcastForm, #specialRequestForm, #recAuthorForm {
+  #authorForm,
+  #talksForm,
+  #specialForm,
+  #podcastForm,
+  #specialRequestForm,
+  #recAuthorForm {
     padding: 10px;
   }
 
@@ -383,33 +533,59 @@ input[type="file"]::file-selector-button:hover {
     font-size: 0.9em;
   }
 
-  .submit, .deletbtn {
+  .submit,
+  .deletbtn {
     font-size: 0.9em;
   }
 }
 
-/* ====== Table ====== */
+/* Table  */
+
+.table-wrapper {
+  width: 80%;
+  overflow-x: auto; /* horizontal scroll */
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
 table {
-  width: 800px;
+  width: 80%;
   border-collapse: collapse;
   text-align: right;
+  min-width: 800px; /* table width */
 }
 
 thead {
-  background-color: #4CAF50;
+  background-color: #4CAF50; /* header */
   color: white;
 }
 
 thead th {
   padding: 10px;
   font-size: 14px;
+  border-right: 1px solid #ddd; /* vertical line */
+}
+
+thead th:last-child {
+  border-right: none; /* remove last line */
 }
 
 tbody td {
   padding: 10px;
   border-bottom: 1px solid #ddd;
-  font-size: 14px;
+  border-right: 1px solid #ddd; /* vertical line */
+  font-size: 16px;
   vertical-align: top;
+  white-space: nowrap; /* prevent wrapping */
+  max-width: 400px;
+  overflow-x: auto;
+}
+
+tbody td:last-child {
+  border-right: none; /* remove last column line */
 }
 
 /* Zebra rows */
@@ -422,7 +598,7 @@ tbody tr:hover {
   background-color: #f1f1f1;
 }
 
-/* ====== Status Badge ====== */
+/*  Status Badge */
 .status {
   padding: 4px 10px;
   border-radius: 12px;
@@ -451,7 +627,7 @@ tbody tr:hover {
   color: white;
 }
 
-/* ====== Select (Review Dropdown) ====== */
+/*  Select (Review Dropdown)  */
 select {
   padding: 6px 8px;
   border-radius: 4px;
@@ -460,7 +636,7 @@ select {
   cursor: pointer;
 }
 
-/* ====== Buttons ====== */
+/*Buttons */
 .action-btn {
   padding: 6px 12px;
   border: none;
@@ -482,27 +658,24 @@ select {
 /* Mobile-friendly table scroll */
 @media (max-width: 600px) {
   .table-wrapper {
-    width: 100%;
     overflow-x: auto;
-    overflow-y: auto;        /* horizontal scroll only */
-    -webkit-overflow-scrolling: touch; /* smooth scroll on iOS */
-    border-radius: 8px;
-    box-shadow: 0 0 6px rgba(0,0,0,0.1);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 100%;  /* allow scrolling naturally */
+    min-width: 100%;
   }
 
   th, td {
     padding: 8px 12px;
-    white-space: nowrap; /* prevent text wrapping */
+    white-space: nowrap;
     text-align: left;
   }
 
-  /* Optional: alternating row colors for readability */
+  /* Zebra rows for mobile */
   tbody tr:nth-child(odd) {
     background-color: #f9f9f9;
   }
@@ -510,7 +683,51 @@ select {
   tbody tr:nth-child(even) {
     background-color: #ffffff;
   }
+
+  th, td {
+    border-right: 1px solid #ddd;
+  }
+
+  th:last-child, td:last-child {
+    border-right: none;
+  }
 }
 
+/* File download link inside admin table */
+td a.download-link {
+  display: inline-block;
+  padding: 2px 12px;
+  background-color: #527E69; 
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+td a.download-link:hover {
+  background-color: #305E53;
+}
+
+td a.download-link:active {
+  transform: translateY(0);
+}
+
+td a.download-link::before {
+  content: "⬇ ";
+}
+
+td a {
+  color: #527E69;
+  text-decoration: none;
+}
+
+td.row-count,
+th.row-count {
+  font-weight: 300;
+  color: #333;
+  width: 20px !important;
+}
 
 

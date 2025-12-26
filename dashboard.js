@@ -68,7 +68,7 @@ async function changePageContent(href) {
 
     contentContainer.innerHTML = newContent.innerHTML;
     initializePageScripts(href);
-    
+
 
     document.title = title;
 
@@ -142,12 +142,11 @@ function toJalali(gy, gm, gd) {
 }
 
 // --- TinyMCE initialization ---
-// --- TinyMCE initialization (SPA-safe) ---
 function initializeEditors() {
   // If TinyMCE is not loaded, do nothing
   if (!window.tinymce) return;
 
-  // 🔴 IMPORTANT: remove old editors before re-init
+  // remove old editors before re-init
   tinymce.remove();
 
   tinymce.init({
@@ -182,7 +181,7 @@ function initializePageScripts(href) {
         e.preventDefault();
 
         // const content = document.getElementById('description').value;
-         const content = tinymce.get('description')?.getContent() || '';
+        const content = tinymce.get('description')?.getContent() || '';
         const writer = document.getElementById('authorName').value;
         const title = document.getElementById('bookName').value;
         const id = document.getElementById('id').value;
@@ -676,77 +675,178 @@ function initializePageScripts(href) {
   }
 
   if (href === 'request') {
-    const form = document.getElementById('specialRequestForm');
-    if (form) {
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
+    const form = document.getElementById('provinceForm');
+    if (!form) return;
 
-        const province = document.getElementById('specialProvince').value.trim();
-        const startDate = document.getElementById('specialStartDate').value;
-        const endDate = document.getElementById('specialEndDate').value;
-        const isOpenInput = document.getElementById('specialIsOpen').value === 'true';
-        // const description = document.getElementById('specialDescription').value;
-        const content = tinymce.get('reqDescription')?.getContent() || '';
+    const fieldsContainer = document.getElementById('fieldsContainer');
+    const addFieldBtn = document.getElementById('addFieldBtn');
 
-        function formatDariDate(inputDate) {
-          const d = new Date(inputDate);
-          const weekday = weekdaysDari[d.getDay()];
-          const j = toJalali(d.getFullYear(), d.getMonth() + 1, d.getDate());
+    /* ---------- ADD FIELD ---------- */
+    addFieldBtn.addEventListener('click', () => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'field-row';
 
-          return `${weekday} ${j.jd} ${monthsDari[j.jm - 1]} ${j.jy}`;
-        }
+      wrapper.innerHTML = `
+      <input type="text" placeholder="Label" class="field-label" required>
+      <input type="text" placeholder="Name (unique)" class="field-name" required>
 
-        const startDateText = formatDariDate(startDate);
-        const endDateText = formatDariDate(endDate);
-        const dateText = `از ${startDateText} تا ${endDateText}`;
+      <select class="field-type">
+        <option value="text">Text</option>
+        <option value="email">Email</option>
+        <option value="number">Number</option>
+        <option value="textarea">Textarea</option>
+        <option value="select">Select</option>
+        <option value="link">Link (URL)</option>
+        <option value="date">Date</option>
+        <option value="file">File (Student Upload)</option>
+        <option value="instruction_file">Instruction File (Read Only)</option>
+      </select>
 
-        const now = new Date();
-        const end = new Date(endDate);
+      <input type="text" placeholder="Options (comma-separated)" class="field-options">
 
-        const isStillOpen = end >= now && isOpenInput;
+      <label>
+        <input type="checkbox" class="field-required"> Required
+      </label>
 
+      <button type="button" class="remove-field">X</button>
+    `;
 
-        try {
-          const { data: existing, error: checkError } = await supabase
-            .from('provinces')
-            .select('id')
-            .eq('provinces', province);
+      fieldsContainer.appendChild(wrapper);
 
-          if (checkError) throw checkError;
+      const typeSelect = wrapper.querySelector('.field-type');
 
-          if (existing.length > 0) {
-            const { error: deleteError } = await supabase
-              .from('provinces')
-              .delete()
-              .eq('provinces', province);
+      /* ---------- SHOW FILE INPUT FOR INSTRUCTION FILE ---------- */
+      typeSelect.addEventListener('change', () => {
+        wrapper.querySelector('.instruction-file-input')?.remove();
 
-            if (deleteError) throw deleteError;
-          }
+        if (typeSelect.value === 'instruction_file') {
+          const fileInput = document.createElement('input');
+          fileInput.type = 'file';
+          fileInput.className = 'instruction-file-input';
+          fileInput.accept = '.pdf,.doc,.docx,.png,.jpg';
 
-          const { error: insertError } = await supabase.from('provinces').insert([
-            {
-              provinces: province,
-              open: isStillOpen,
-              date: dateText,
-              description: description
-            }
-          ]);
-
-          if (insertError) {
-            console.error(' Error inserting province:', insertError.message);
-            alert('خطا در ثبت اطلاعات');
-          } else {
-            alert(' ولایت با موفقیت ثبت شد!');
-            document.getElementById('specialRequestForm').reset();
-          }
-        } catch (err) {
-          console.error(' Unexpected error:', err);
-          alert('خطا در ثبت اطلاعات');
+          wrapper.appendChild(fileInput);
         }
       });
 
-    }
+      wrapper.querySelector('.remove-field').addEventListener('click', () => {
+        wrapper.remove();
+      });
+    });
+
+    /* ---------- FORM SUBMIT ---------- */
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const province = document.getElementById('provinceName').value.trim();
+      const isOpenInput = document.getElementById('isOpen').value === 'true';
+      const content = tinymce.get('reqDescription')?.getContent() || '';
+      function toDariDate(rawDate) {
+        if (!rawDate) return "";
+
+        const d = new Date(rawDate);
+        const weekday = weekdaysDari[d.getDay()];
+        const j = toJalali(d.getFullYear(), d.getMonth() + 1, d.getDate());
+
+        return `${weekday} ${j.jd} ${monthsDari[j.jm - 1]} ${j.jy}`;
+      }
+      const startRaw = document.getElementById('startDate').value;
+      const endRaw = document.getElementById('endDate').value;
+
+      let dateDari = "";
+
+      if (startRaw && endRaw) {
+        dateDari = `از ${toDariDate(startRaw)} تا ${toDariDate(endRaw)}`;
+      } else if (startRaw) {
+        dateDari = toDariDate(startRaw);
+      } else if (endRaw) {
+        dateDari = toDariDate(endRaw);
+      }
+
+
+
+      /* ---------- BUILD FIELDS (WITH FILE UPLOAD) ---------- */
+      const fields = [];
+
+      for (const row of fieldsContainer.querySelectorAll('.field-row')) {
+        const label = row.querySelector('.field-label').value.trim();
+        const name = row.querySelector('.field-name').value.trim();
+        const type = row.querySelector('.field-type').value;
+        const required = row.querySelector('.field-required').checked;
+
+        let options = null;
+        let fileUrl = null;
+
+        if (type === 'select') {
+          const raw = row.querySelector('.field-options').value.trim();
+          options = raw ? raw.split(',').map(o => o.trim()) : null;
+        }
+
+        /* ---------- ADMIN FILE UPLOAD ---------- */
+        if (type === 'instruction_file') {
+          const fileInput = row.querySelector('.instruction-file-input');
+
+          if (fileInput && fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const path = `instructions/${Date.now()}_${file.name}`;
+
+            const { data, error } = await supabase.storage
+              .from('admin-uploads')
+              .upload(path, file, { upsert: true });
+
+            if (error) {
+              alert('Instruction file upload failed');
+              return;
+            }
+
+            fileUrl = supabase.storage
+              .from('admin-uploads')
+              .getPublicUrl(data.path).data.publicUrl;
+          }
+        }
+
+        fields.push({
+          label,
+          name,
+          type,
+          required,
+          options,
+          fileUrl // only filled for instruction_file
+        });
+      }
+
+      /* ---------- SAVE TO DATABASE ---------- */
+      const payload = {
+        province,
+        open: isOpenInput,
+        description: content,
+        date: dateDari,
+        fields
+      };
+
+      const { data: existing, error } = await supabase
+        .from('provinces')
+        .select('id')
+        .eq('province', province);
+
+      if (error) {
+        console.error(error);
+        alert('Error saving');
+        return;
+      }
+
+      if (existing.length > 0) {
+        await supabase.from('provinces').update(payload).eq('province', province);
+      } else {
+        await supabase.from('provinces').insert([payload]);
+      }
+
+      alert('ولایت و فیلدها با موفقیت ثبت شدند!');
+      form.reset();
+      fieldsContainer.innerHTML = '';
+    });
   }
+
 
   if (href === 'recommendations') {
     const form = document.getElementById('recAuthorForm');
@@ -757,7 +857,7 @@ function initializePageScripts(href) {
 
         const category = document.getElementById('recCategory').value;
         // const description = document.getElementById('recDescription').value;
-         const description = tinymce.get('recDescription')?.getContent() || '';
+        const description = tinymce.get('recDescription')?.getContent() || '';
         const authorName = document.getElementById('recAuthorName').value;
         const bookName = document.getElementById('recBookName').value;
         const genre = document.getElementById('recGenre').value;
@@ -869,8 +969,9 @@ function initializePageScripts(href) {
 
   // Aplications
   if (href === 'applications') {
+    const tableHead = document.getElementById("applicationsTableHead");
     const tableBody = document.querySelector("#applicationsTable tbody");
-    if (!tableBody) return; // safe now, inside function
+    if (!tableBody || !tableHead) return;
 
     async function loadApplications() {
       const { data, error } = await supabase
@@ -884,40 +985,117 @@ function initializePageScripts(href) {
       }
 
       tableBody.innerHTML = "";
+      tableHead.innerHTML = "";
+
+      // Collect all headers dynamically, except "fields" itself
+      let headers = new Set();
 
       data.forEach(app => {
+        Object.keys(app).forEach(key => {
+          if (key === "id" || key === "created_at" || key === "fields") return; // skip fields
+          headers.add(key);
+        });
+
+        // Add dynamic field keys from fields JSON
+        if (app.fields && typeof app.fields === "object" && app.fields !== null) {
+          Object.keys(app.fields).forEach(f => headers.add(f));
+        }
+      });
+
+      // Always include 'تغییر وضعیت' as last column
+      headers = Array.from(headers);
+      headers.push("تغییر وضعیت");
+
+      // Generate table headers
+      // Add count column first
+      const countTh = document.createElement("th");
+      countTh.textContent = "شماره";
+      tableHead.appendChild(countTh);
+      headers.forEach(header => {
+        const th = document.createElement("th");
+        th.textContent = header === "status" ? "وضعیت"
+          : header === "name" ? "نام"
+            : header === "email" ? "ایمیل"
+              : header === "province" ? "ولایت"
+                : header === "age" ? "سن"
+                  : header === "education" ? "تحصیلات"
+                    : header === "motivation" ? "انگیزه"
+                      : header === "experience" ? "تجربه"
+                        : header; // dynamic fields
+        tableHead.appendChild(th);
+      });
+
+      // Generate rows
+      data.forEach((app, index) => {
         const row = document.createElement("tr");
-        row.innerHTML = `
-        <td>${app.name}</td>
-        <td>${app.email}</td>
-        <td>${app.province}</td>
-        <td>${app.age}</td>
-        <td>${app.education}</td>
-        <td>${app.motivation}</td>
-         <td>${app.experience}</td>
-        <td>${app.status}</td>
-        <td>
-          <select onchange="updateStatus('${app.id}', this.value)">
-            <option value="submitted">ثبت شده</option>
-            <option value="under_review">در حال بررسی</option>
-            <option value="accepted">قبول</option>
-            <option value="rejected">رد</option>
-          </select>
-        </td>
-      `;
+
+        // Row number
+        const countTd = document.createElement("td");
+        countTd.textContent = index + 1;
+        countTd.classList.add("row-count");
+        row.appendChild(countTd);
+
+        headers.forEach(header => {
+
+          const cell = document.createElement("td");
+
+          if (header === "تغییر وضعیت") {
+            const select = document.createElement("select");
+            ["submitted", "under_review", "accepted", "rejected"].forEach(s => {
+              const option = document.createElement("option");
+              option.value = s;
+              option.textContent = s === "submitted" ? "ثبت شده"
+                : s === "under_review" ? "در حال بررسی"
+                  : s === "accepted" ? "قبول" : "رد";
+              if (app.status === s) option.selected = true;
+              select.appendChild(option);
+            });
+            select.addEventListener("change", () => updateStatus(app.id, select.value));
+            cell.appendChild(select);
+
+          } else if (app[header] !== undefined) {
+            cell.textContent = app[header];
+
+          } else if (app.fields && app.fields[header] !== undefined) {
+            const value = app.fields[header];
+
+            if (typeof value === "string" && value.startsWith("http")) {
+              const a = document.createElement("a");
+              a.href = value;
+              a.target = "_blank";
+              a.rel = "noopener noreferrer";
+              a.classList.add("download-link");
+
+              // distinguish file vs normal link
+              a.textContent = value.includes("supabase")
+                ? "دانلود فایل"
+                : "مشاهده لینک";
+
+              cell.appendChild(a);
+            } else {
+              cell.textContent = value;
+            }
+          }
+
+          row.appendChild(cell);
+        });
+
         tableBody.appendChild(row);
       });
     }
 
     window.updateStatus = async (id, status) => {
-      await supabase
+      const { error } = await supabase
         .from("applications")
         .update({ status })
         .eq("id", id);
+
+      if (error) console.error(error);
     };
 
     loadApplications();
   }
+
 
 }
 
